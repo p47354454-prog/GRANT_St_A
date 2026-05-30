@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>GRANT St.A | Remote Control</title>
+    <style>
+        body { display: flex; flex-direction: column; gap: 10px; padding: 20px; background: #222; }
+        button { padding: 20px; font-size: 18px; border-radius: 10px; border: none; background: #007bff; color: white; }
+    </style>
+</head>
+<body>
+    <button onclick="sendCommand('entry')">Вход</button>
+    <button onclick="sendCommand('transit')">Транзитная ось</button>
+    <button onclick="sendCommand('restaurant')">Ресторан</button>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+
+        const firebaseConfig = { /* ВСТАВЬ СЮДА ТОТ ЖЕ КОНФИГ */ };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        window.sendCommand = (scene) => {
+            set(ref(db, 'currentScene'), scene);
+            alert("Команда " + scene + " отправлена!");
+        };
+    </script>
+</body>
+</html>
