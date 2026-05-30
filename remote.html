@@ -2,28 +2,35 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>GRANT St.A | Remote Control</title>
+    <title>Remote Control</title>
     <style>
-        body { display: flex; flex-direction: column; gap: 10px; padding: 20px; background: #222; }
-        button { padding: 20px; font-size: 18px; border-radius: 10px; border: none; background: #007bff; color: white; }
+        body { display: flex; flex-direction: column; gap: 20px; padding: 50px; background: #222; }
+        button { padding: 30px; font-size: 24px; color: white; background: #007bff; border: none; border-radius: 10px; }
     </style>
 </head>
 <body>
-    <button onclick="sendCommand('entry')">Вход</button>
-    <button onclick="sendCommand('transit')">Транзитная ось</button>
-    <button onclick="sendCommand('restaurant')">Ресторан</button>
+    <button onclick="sendCommand('entry')">ВХОД</button>
+    <button onclick="sendCommand('transit')">ТРАНЗИТ</button>
+    <button onclick="sendCommand('restaurant')">РЕСТОРАН</button>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
 
-        const firebaseConfig = { /* ВСТАВЬ СЮДА ТОТ ЖЕ КОНФИГ */ };
+        const firebaseConfig = {
+            apiKey: "AIzaSyCx6DLX-bMYArTNIdg7Ek_ccuwHmUC_5zM",
+            authDomain: "grant-st-a.firebaseapp.com",
+            projectId: "grant-st-a",
+            storageBucket: "grant-st-a.appspot.com",
+            messagingSenderId: "79852777495",
+            appId: "1:79852777495:web:ada5c57f7fe6dbc7b31452",
+            measurementId: "G-CDLWTJVPY"
+        };
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
         window.sendCommand = (scene) => {
             set(ref(db, 'currentScene'), scene);
-            alert("Команда " + scene + " отправлена!");
         };
     </script>
 </body>
