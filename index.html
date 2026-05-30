@@ -25,14 +25,14 @@
         });
 
         // Слушаем команды с пульта
-        onValue(ref(db, 'currentScene'), (snapshot) => {
-            const sceneId = snapshot.val();
-            if(sceneId) {
-                console.log("Смена сцены на: " + sceneId);
-                // Здесь будет логика загрузки твоего видео/панорамы
-                viewer.addHotspot({"pitch": 0, "yaw": 0, "type": "info", "text": "Переход: " + sceneId});
-            }
-        });
+onValue(ref(db, 'currentScene'), (snapshot) => {
+    const sceneId = snapshot.val();
+    if(sceneId) {
+        // Заменяем видео на выбранную сцену
+        viewer.setPanorama(sceneId + "_video.mp4"); // Убедись, что файлы называются именно так
+        console.log("Презентация переключена на: " + sceneId);
+    }
+});
     </script>
 </head>
 <body>
