@@ -11,14 +11,12 @@
     </style>
 </head>
 <body>
-
 <div id="panorama"></div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
     import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
 
-    // Конфигурация Firebase
     const firebaseConfig = {
         apiKey: "AIzaSyCx6DLX-bMYArTNIdg7Ek_ccuwHmUC_5zM",
         authDomain: "grant-st-a.firebaseapp.com",
@@ -32,7 +30,6 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // Инициализация плеера
     const viewer = pannellum.viewer('panorama', {
         "type": "equirectangular",
         "panorama": "entry_video.mp4",
@@ -40,15 +37,12 @@
         "showControls": false
     });
 
-    // Слушаем пульт и переключаем видео
     onValue(ref(db, 'currentScene'), (snapshot) => {
         const sceneId = snapshot.val();
         if(sceneId) {
-            console.log("Переключение на: " + sceneId);
             viewer.setPanorama(sceneId + "_video.mp4");
         }
     });
 </script>
-
 </body>
 </html>
