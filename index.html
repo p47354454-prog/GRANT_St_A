@@ -2,65 +2,37 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>GRANT St.A | Presentation</title>
+    <title>PRESENTATION</title>
     <link rel="stylesheet" href="https://cdn.pannellum.org/2.5/pannellum.css"/>
     <script src="https://cdn.pannellum.org/2.5/pannellum.js"></script>
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-        #panorama { width: 100%; height: 100vh; }
+        body { margin: 0; padding: 0; overflow: hidden; background: #000; }
+        #panorama { width: 100vw; height: 100vh; }
     </style>
 </head>
 <body>
+    <div id="panorama"></div>
+    <script>
+        // Инициализация плеера с жесткими настройками для видео
+        const viewer = pannellum.viewer('panorama', {
+            "type": "equirectangular",
+            "panorama": "entry_video.mp4",
+            "video": true,
+            "autoLoad": true,
+            "autoplay": true,
+            "mute": true,
+            "loop": true,
+            "showControls": false
+        });
 
-<div id="panorama"></div>
-
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyCx6DLX-bMYArTNIdg7Ek_ccuwHmUC_5zM",
-        authDomain: "grant-st-a.firebaseapp.com",
-        projectId: "grant-st-a",
-        storageBucket: "grant-st-a.appspot.com",
-        messagingSenderId: "79852777495",
-        appId: "1:79852777495:web:ada5c57f7fe6dbc7b31452",
-        measurementId: "G-CDLWTJVPY"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    // Инициализация плеера с принудительным режимом видео
-    const viewer = pannellum.viewer('panorama', {
-        "type": "equirectangular",
-        "panorama": "entry_video.mp4",
-        "video": true, 
-        "autoLoad": true,
-        "autoplay": true,
-        "mute": true,
-        "showControls": false,
-        "loop": true
-    });
-
-    // Слушаем пульт
-    onValue(ref(db, 'currentScene'), (snapshot) => {
-        const sceneName = snapshot.val();
-        if(sceneName) {
-            console.log("Загрузка: " + sceneName);
-            viewer.addScene(sceneName, {
-                "type": "equirectangular",
-                "panorama": sceneName,
-                "video": true,
-                "autoLoad": true,
-                "autoplay": true,
-                "mute": true,
-                "loop": true
-            });
-            viewer.loadScene(sceneName);
-        }
-    });
-</script>
-
+        // Принудительная «разблокировка» видео после первого клика
+        document.body.addEventListener('click', function() {
+            const vid = document.querySelector('video');
+            if (vid) {
+                vid.muted = true;
+                vid.play();
+            }
+        }, { once: true });
+    </script>
 </body>
 </html>
