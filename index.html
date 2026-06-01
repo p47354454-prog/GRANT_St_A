@@ -31,29 +31,33 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // Инициализация плеера с зацикливанием
+    // Инициализация плеера с настройками автозапуска
     const viewer = pannellum.viewer('panorama', {
         "type": "equirectangular",
         "panorama": "entry_video.mp4",
         "autoLoad": true,
+        "autoplay": true,
+        "mute": true, 
         "showControls": false,
         "loop": true 
     });
 
-    // Слушаем пульт и переключаем сцены через добавление в память
+    // Слушаем пульт
     onValue(ref(db, 'currentScene'), (snapshot) => {
-        const sceneId = snapshot.val();
-        if(sceneId) {
-            console.log("Переключение на: " + sceneId);
+        const sceneName = snapshot.val(); // Например: "entry_video.mp4"
+        if(sceneName) {
+            console.log("Переключение на: " + sceneName);
             
-            // Добавляем сцену и сразу загружаем ее
-            viewer.addScene(sceneId, {
+            // Добавляем сцену
+            viewer.addScene(sceneName, {
                 "type": "equirectangular",
-                "panorama": sceneId + "_video.mp4",
+                "panorama": sceneName,
                 "autoLoad": true,
+                "autoplay": true,
+                "mute": true,
                 "loop": true
             });
-            viewer.loadScene(sceneId);
+            viewer.loadScene(sceneName);
         }
     });
 </script>
