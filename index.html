@@ -31,11 +31,11 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // Инициализация плеера
+    // Инициализация плеера с принудительным режимом видео
     const viewer = pannellum.viewer('panorama', {
         "type": "equirectangular",
         "panorama": "entry_video.mp4",
-        "video": true,
+        "video": true, 
         "autoLoad": true,
         "autoplay": true,
         "mute": true,
@@ -43,16 +43,11 @@
         "loop": true
     });
 
-    // Слушаем изменения в базе
+    // Слушаем пульт
     onValue(ref(db, 'currentScene'), (snapshot) => {
-        let sceneName = snapshot.val();
-        
-        // Очистка имени файла от возможных скрытых символов или пробелов
+        const sceneName = snapshot.val();
         if(sceneName) {
-            sceneName = sceneName.trim();
-            console.log("Переключаюсь на: " + sceneName);
-            
-            // Если сцена уже есть, просто загружаем её
+            console.log("Загрузка: " + sceneName);
             viewer.addScene(sceneName, {
                 "type": "equirectangular",
                 "panorama": sceneName,
