@@ -2,37 +2,25 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>PRESENTATION</title>
     <link rel="stylesheet" href="https://cdn.pannellum.org/2.5/pannellum.css"/>
     <script src="https://cdn.pannellum.org/2.5/pannellum.js"></script>
     <style>
-        body { margin: 0; padding: 0; overflow: hidden; background: #000; }
+        body { margin: 0; }
         #panorama { width: 100vw; height: 100vh; }
     </style>
 </head>
 <body>
     <div id="panorama"></div>
     <script>
-        // Инициализация плеера с жесткими настройками для видео
         const viewer = pannellum.viewer('panorama', {
             "type": "equirectangular",
             "panorama": "entry_video.mp4",
             "video": true,
-            "autoLoad": true,
             "autoplay": true,
-            "mute": true,
             "loop": true,
-            "showControls": false
+            "mute": true,
+            "autoLoad": true
         });
-
-        // Принудительная «разблокировка» видео после первого клика
-        document.body.addEventListener('click', function() {
-            const vid = document.querySelector('video');
-            if (vid) {
-                vid.muted = true;
-                vid.play();
-            }
-        }, { once: true });
     </script>
 </body>
 </html>
